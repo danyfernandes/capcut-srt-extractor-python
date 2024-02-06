@@ -60,15 +60,17 @@ def process(input, output):
     materials = data['materials']
     tracks = data['tracks']
 
+    # Get texts and segments
+    texts = materials['texts']
+    segments = []
+
     # Take the track with attribute=0
     for track in tracks:
         if track['attribute'] == 0:
-            tracks = track
-            break
-    
-    # Get texts and segments
-    texts = materials['texts']
-    segments = tracks['segments']
+            # Take the track has more than 1 segment
+            if 'segments' in track and len(track['segments']) > 1:
+                segments = track['segments']
+                break
 
     # Counter to be incremented for each subtitle
     sub_counter = 0
